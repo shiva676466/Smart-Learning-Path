@@ -12,6 +12,12 @@ SECRET_KEY = 'django-insecure-smart-learning-2025-change-in-production-xyz123abc
 
 DEBUG = True
 
+# Disable HTTPS redirect/security settings for local development
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_PROXY_SSL_HEADER = None
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
