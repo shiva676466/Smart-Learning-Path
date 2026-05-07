@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}{{ roadmap.title }} — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="roadmap-detail-header">
+            <div class="roadmap-detail-info">
+                <div class="roadmap-detail-badge">{{ roadmap.skill.icon }}</div>
+                <div>
+                    <h1>{{ roadmap.title }}</h1>
+                    <div class="roadmap-meta">
+                        <span class="badge badge-{{ roadmap.level }}">{{ roadmap.get_level_display }}</span>
+                        <span>📅 {{ roadmap.duration_days }} days</span>
+                        <span>⏱ {{ roadmap.daily_hours }}h/day</span>
+                        <span>🎯 Target: {{ roadmap.target_end_date }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="roadmap-actions">
+                <a href="{% url 'roadmap:my_roadmaps' %}" class="btn-secondary">← All Roadmaps</a>
+                <form method="post" action="{% url 'roadmap:delete' roadmap.pk %}" style="display:inline" onsubmit="return confirm('Delete this roadmap?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-danger-sm">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-stats">
+                <span>{{ roadmap.completed_tasks_count }} / {{ roadmap.total_tasks }} tasks completed</span>
+                <span id="progressPct" class="progress-pct">{{ roadmap.progress_percentage }}%</span>
+            </div>
+            <div class="progress-bar-track progress-bar-lg">
+                <div class="progress-bar-fill" id="mainProgressBar" style="width: {{ roadmap.progress_percentage }}%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Week Navigation -->
+    <div class="week-tabs" id="weekTabs">
+        {% for week, week_tasks in weeks.items %}
+        <button class="week-tab {% if week == 1 %}active{% endif %}" data-week="{{ week }}">
+            Week {{ week }}
+            <span class="week-progress">
+                {% with completed=0 total=week_tasks|length %}
+                {{ week_tasks|length }} tasks
+                {% endwith %}
+            </span>
+        </button>
+        {% endfor %}
+    </div>
+
+    <!-- Task Weeks -->
+    {% for week, week_tasks in weeks.items %}
+    <div class="week-section {% if week != 1 %}hidden{% endif %}" id="week-{{ week }}">
+        <h2 class="week-title">Week {{ week }}</h2>
+        <div class="tasks-grid">
+            {% for task in week_tasks %}
+            <div class="task-card {% if task.is_completed %}task-completed{% endif %}" id="task-{{ task.id }}">
+                <div class="task-header">
+                    <div class="task-day">Day {{ task.day_number }}</div>
+                    <div class="task-difficulty">
+                        {% for i in "12345" %}
+                            <span class="diff-dot {% if forloop.counter <= task.difficulty %}diff-active{% endif %}"></span>
+                        {% endfor %}
+                    </div>
+                    <div class="task-xp">+{{ task.xp_reward }} XP</div>
+                </div>
+
+                <h3 class="task-title">{{ task.title }}</h3>
+                <p class="task-desc">{{ task.description }}</p>
+
+                <div class="task-details-toggle" onclick="toggleDetails({{ task.id }})">
+                    📋 View Task Details <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="task-details" id="details-{{ task.id }}" style="display:none">
+                    <pre class="task-tasks">{{ task.task_details }}</pre>
+                </div>
+
+                <div class="task-footer">
+                    {% if task.resource_url %}
+                    <a href="{{ task.resource_url }}" target="_blank" class="resource-link">
+                        🔗 {{ task.resource_title|default:"Learn More" }}
+                    </a>
+                    {% endif %}
+                    <span class="task-time">⏱ {{ task.estimated_minutes }}min</span>
+                    <button class="btn-complete {% if task.is_completed %}btn-completed{% endif %}"
+                            onclick="toggleTask({{ task.id }}, this)"
+                            data-task="{{ task.id }}">
+                        {% if task.is_completed %}✅ Completed{% else %}☐ Mark Complete{% endif %}
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="xp-toast" id="xpToast" style="display:none">
+    <span id="xpToastMsg">+10 XP earned!</span>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const CSRF_TOKEN = '{{ csrf_token }}';
+const COMPLETE_API = '/api/tasks/';
+
+function toggleDetails(taskId) {
+    const details = document.getElementById('details-' + taskId);
+    const isHidden = details.style.display === 'none';
+    details.style.display = isHidden ? 'block' : 'none';
+}
+
+function toggleTask(taskId, btn) {
+    fetch(COMPLETE_API + taskId + '/complete/', {
+        method: 'POST',
+        headers: {'X-CSRFToken': CSRF_TOKEN, 'Content-Type': 'application/json'}
+    })
+    .then(r => r.json())
+    .then(data => {
+        const card = document.getElementById('task-' + taskId);
+        if (data.status === 'completed') {
+            card.classList.add('task-completed');
+            btn.textContent = '✅ Completed';
+            btn.classList.add('btn-completed');
+            showXPToast('+' + data.xp_change + ' XP earned! ⚡');
+        } else {
+            card.classList.remove('task-completed');
+            btn.textContent = '☐ Mark Complete';
+            btn.classList.remove('btn-completed');
+        }
+        // Update progress bar
+        const bar = document.getElementById('mainProgressBar');
+        const pct = document.getElementById('progressPct');
+        if (bar && data.progress !== undefined) {
+            bar.style.width = data.progress + '%';
+            pct.textContent = data.progress + '%';
+        }
+    });
+}
+
+function showXPToast(msg) {
+    const toast = document.getElementById('xpToast');
+    document.getElementById('xpToastMsg').textContent = msg;
+    toast.style.display = 'block';
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); toast.style.display = 'none'; }, 3000);
+}
+
+// Week tabs
+document.querySelectorAll('.week-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.week-section').forEach(s => s.classList.add('hidden'));
+        this.classList.add('active');
+        document.getElementById('week-' + this.dataset.week).classList.remove('hidden');
+    });
+});
+</script>
+{% endblock %}

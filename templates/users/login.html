@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Login — LearnPathAI{% endblock %}
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon">⚡</div>
+            <h1>Welcome Back</h1>
+            <p>Continue your learning journey</p>
+        </div>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="field-error">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-auth">Login <i class="fas fa-arrow-right"></i></button>
+        </form>
+        <div class="auth-footer">
+            Don't have an account? <a href="{% url 'users:register' %}">Sign up free</a>
+        </div>
+    </div>
+    <div class="auth-visual">
+        <div class="auth-quote">"The expert in anything was once a beginner."</div>
+        <div class="auth-stats">
+            <div><span>🧠</span> 5 Skills</div>
+            <div><span>📅</span> Day-by-Day Plans</div>
+            <div><span>⚡</span> XP System</div>
+            <div><span>🏆</span> Leaderboard</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

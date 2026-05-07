@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}LearnPathAI — Personalized Learning Roadmaps{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-bg">
+        <div class="hero-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">🚀 AI-Powered Learning</div>
+        <h1 class="hero-title">Master Any Skill With<br><span class="gradient-text">Your Perfect Roadmap</span></h1>
+        <p class="hero-subtitle">Generate personalized, day-by-day learning paths for DSA, Web Dev, AI/ML, Python and more. Track progress, earn XP, stay consistent.</p>
+        <div class="hero-actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'roadmap:generate' %}" class="btn-hero-primary"><i class="fas fa-route"></i> Generate My Roadmap</a>
+                <a href="{% url 'dashboard:dashboard' %}" class="btn-hero-secondary">View Dashboard →</a>
+            {% else %}
+                <a href="{% url 'users:register' %}" class="btn-hero-primary"><i class="fas fa-rocket"></i> Start Learning Free</a>
+                <a href="{% url 'users:login' %}" class="btn-hero-secondary">Login →</a>
+            {% endif %}
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Skills</span></div>
+            <div class="stat"><span class="stat-num">15–90</span><span class="stat-label">Day Plans</span></div>
+            <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Topics</span></div>
+            <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Resources</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header"><h2>Choose Your Learning Path</h2><p>Structured roadmaps crafted for every skill level</p></div>
+        <div class="skills-grid">
+            <div class="skill-card" style="--accent:#f59e0b"><div class="skill-icon">🧠</div><h3>Data Structures &amp; Algorithms</h3><p>Arrays, Trees, Graphs, Dynamic Programming, and competitive problem solving.</p><div class="skill-tags"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div></div>
+            <div class="skill-card" style="--accent:#3b82f6"><div class="skill-icon">🌐</div><h3>Web Development</h3><p>HTML, CSS, JavaScript, React, Node.js — build real full-stack applications.</p><div class="skill-tags"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div></div>
+            <div class="skill-card" style="--accent:#10b981"><div class="skill-icon">🤖</div><h3>AI / Machine Learning</h3><p>NumPy, Pandas, Scikit-Learn, Deep Learning with TensorFlow and Keras.</p><div class="skill-tags"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div></div>
+            <div class="skill-card" style="--accent:#8b5cf6"><div class="skill-icon">🐍</div><h3>Python Programming</h3><p>From syntax to OOP, decorators, generators, and professional Python patterns.</p><div class="skill-tags"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div></div>
+            <div class="skill-card" style="--accent:#ef4444"><div class="skill-icon">🏆</div><h3>Competitive Programming</h3><p>Codeforces strategies, contest math, advanced algorithms and optimization.</p><div class="skill-tags"><span>Beginner</span><span>Intermediate</span><span>Advanced</span></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-header"><h2>Everything You Need to Succeed</h2></div>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">📅</div><h3>Day-by-Day Plans</h3><p>Each day has a specific topic, task, and resource link — zero guesswork.</p></div>
+            <div class="feature-card"><div class="feature-icon">📊</div><h3>Progress Tracking</h3><p>Mark tasks complete and watch your progress bar fill up in real time.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3>XP &amp; Levels</h3><p>Earn experience points for every task. Level up as you learn.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔥</div><h3>Streak System</h3><p>Maintain daily learning streaks to build unstoppable habits.</p></div>
+            <div class="feature-card"><div class="feature-icon">🏆</div><h3>Leaderboard</h3><p>Compete with other learners. See who's making the fastest progress.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔄</div><h3>Adaptive Plans</h3><p>Miss a few days? The system suggests how to catch up.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-box">
+            <h2>Ready to Transform Your Skills?</h2>
+            <p>Join learners already building expertise with structured roadmaps.</p>
+            <a href="{% url 'users:register' %}" class="btn-hero-primary"><i class="fas fa-rocket"></i> Create Free Account</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

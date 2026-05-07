@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block title %}Generate Roadmap — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>🗺️ Generate Your Learning Path</h1>
+        <p>Tell us what you want to learn and we'll build a personalized day-wise roadmap</p>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post" class="generate-form" id="generateForm">
+        {% csrf_token %}
+
+        <!-- Step 1: Skill -->
+        <div class="form-step" id="step1">
+            <div class="step-header">
+                <div class="step-number">01</div>
+                <div><h2>What do you want to learn?</h2><p>Choose the skill you want to master</p></div>
+            </div>
+            <div class="skill-selector-grid">
+                {% for skill in skills %}
+                <label class="skill-selector-card" style="--color: {{ skill.color }}">
+                    <input type="radio" name="skill" value="{{ skill.id }}" required>
+                    <div class="skill-card-inner">
+                        <div class="skill-emoji">{{ skill.icon }}</div>
+                        <div class="skill-name">{{ skill.name }}</div>
+                        <div class="skill-cat">{{ skill.get_category_display }}</div>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+            {% if form.skill.errors %}<div class="field-error">{{ form.skill.errors.0 }}</div>{% endif %}
+        </div>
+
+        <!-- Step 2: Level -->
+        <div class="form-step">
+            <div class="step-header">
+                <div class="step-number">02</div>
+                <div><h2>What's your current level?</h2><p>Be honest — we'll tailor the content perfectly</p></div>
+            </div>
+            <div class="level-selector">
+                <label class="level-card">
+                    <input type="radio" name="level" value="beginner" required>
+                    <div class="level-inner">
+                        <div class="level-emoji">🟢</div>
+                        <div class="level-name">Beginner</div>
+                        <div class="level-desc">Starting from zero or just basics</div>
+                    </div>
+                </label>
+                <label class="level-card">
+                    <input type="radio" name="level" value="intermediate">
+                    <div class="level-inner">
+                        <div class="level-emoji">🟡</div>
+                        <div class="level-name">Intermediate</div>
+                        <div class="level-desc">Know the fundamentals, want to go deeper</div>
+                    </div>
+                </label>
+                <label class="level-card">
+                    <input type="radio" name="level" value="advanced">
+                    <div class="level-inner">
+                        <div class="level-emoji">🔴</div>
+                        <div class="level-name">Advanced</div>
+                        <div class="level-desc">Solid foundation, aiming for mastery</div>
+                    </div>
+                </label>
+            </div>
+            {% if form.level.errors %}<div class="field-error">{{ form.level.errors.0 }}</div>{% endif %}
+        </div>
+
+        <!-- Step 3: Daily Time -->
+        <div class="form-step">
+            <div class="step-header">
+                <div class="step-number">03</div>
+                <div><h2>How much time per day?</h2><p>Be realistic — consistency beats intensity</p></div>
+            </div>
+            <div class="time-selector">
+                {% for val, label in form.daily_hours.field.choices %}
+                <label class="time-card">
+                    <input type="radio" name="daily_hours" value="{{ val }}" {% if val == '1.0' %}checked{% endif %}>
+                    <div class="time-inner">
+                        <div class="time-val">{{ val }}h</div>
+                        <div class="time-label">{{ label }}</div>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Step 4: Duration -->
+        <div class="form-step">
+            <div class="step-header">
+                <div class="step-number">04</div>
+                <div><h2>Goal duration?</h2><p>How many days do you have to complete this skill?</p></div>
+            </div>
+            <div class="duration-selector">
+                <label class="duration-card">
+                    <input type="radio" name="duration_days" value="15" required>
+                    <div class="duration-inner">
+                        <div class="duration-days">15</div>
+                        <div class="duration-label">Days</div>
+                        <div class="duration-desc">Sprint Mode ⚡</div>
+                    </div>
+                </label>
+                <label class="duration-card">
+                    <input type="radio" name="duration_days" value="30">
+                    <div class="duration-inner">
+                        <div class="duration-days">30</div>
+                        <div class="duration-label">Days</div>
+                        <div class="duration-desc">Standard 📅</div>
+                    </div>
+                </label>
+                <label class="duration-card active">
+                    <input type="radio" name="duration_days" value="60" checked>
+                    <div class="duration-inner">
+                        <div class="duration-days">60</div>
+                        <div class="duration-label">Days</div>
+                        <div class="duration-desc">Deep Dive 🧠</div>
+                    </div>
+                </label>
+                <label class="duration-card">
+                    <input type="radio" name="duration_days" value="90">
+                    <div class="duration-inner">
+                        <div class="duration-days">90</div>
+                        <div class="duration-label">Days</div>
+                        <div class="duration-desc">Master Track 🏆</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-submit-section">
+            <button type="submit" class="btn-generate" id="submitBtn">
+                <span class="btn-text"><i class="fas fa-magic"></i> Generate My Roadmap</span>
+                <span class="btn-loading" style="display:none">⏳ Generating...</span>
+            </button>
+            <p class="submit-note">Your personalized day-by-day plan will be ready instantly!</p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.getElementById('generateForm').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.querySelector('.btn-text').style.display = 'none';
+    btn.querySelector('.btn-loading').style.display = 'inline';
+    btn.disabled = true;
+});
+
+// Highlight selected cards
+document.querySelectorAll('.skill-selector-card input, .level-card input, .time-card input, .duration-card input').forEach(input => {
+    input.addEventListener('change', function() {
+        const group = this.name;
+        document.querySelectorAll(`input[name="${group}"]`).forEach(i => {
+            i.closest('label').classList.remove('selected');
+        });
+        this.closest('label').classList.add('selected');
+    });
+});
+</script>
+{% endblock %}

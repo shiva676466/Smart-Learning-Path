@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>🏆 Leaderboard</h1>
+        <p>Top learners ranked by XP earned</p>
+    </div>
+</div>
+<div class="container">
+    <div class="leaderboard-your-rank">
+        Your Rank: <strong>#{{ user_rank }}</strong> · {{ request.user.profile.total_xp }} XP
+    </div>
+    <div class="leaderboard-table">
+        {% for profile in profiles %}
+        <div class="lb-row {% if profile.user == request.user %}lb-you{% endif %}">
+            <div class="lb-rank">
+                {% if forloop.counter == 1 %}🥇
+                {% elif forloop.counter == 2 %}🥈
+                {% elif forloop.counter == 3 %}🥉
+                {% else %}#{{ forloop.counter }}{% endif %}
+            </div>
+            <div class="lb-avatar">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="">
+                {% else %}
+                    <span>{{ profile.user.username|first|upper }}</span>
+                {% endif %}
+            </div>
+            <div class="lb-info">
+                <div class="lb-name">{{ profile.user.get_full_name|default:profile.user.username }}</div>
+                <div class="lb-title">{{ profile.level_title }} · Lv{{ profile.level_number }}</div>
+            </div>
+            <div class="lb-xp">⚡ {{ profile.total_xp }} XP</div>
+            <div class="lb-streak">🔥 {{ profile.streak_days }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

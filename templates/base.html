@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Learning Path Generator{% endblock %}</title>
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'dashboard:home' %}" class="nav-brand">
+            <span class="brand-icon">⚡</span>
+            <span class="brand-text">LearnPath<span class="brand-accent">AI</span></span>
+        </a>
+
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="{% url 'roadmap:generate' %}" class="nav-link {% if 'generate' in request.path %}active{% endif %}">
+                    <i class="fas fa-route"></i> Generate Path
+                </a>
+                <a href="{% url 'roadmap:my_roadmaps' %}" class="nav-link">
+                    <i class="fas fa-map"></i> My Roadmaps
+                </a>
+                <a href="{% url 'progress:leaderboard' %}" class="nav-link">
+                    <i class="fas fa-trophy"></i> Leaderboard
+                </a>
+                <div class="nav-user">
+                    <div class="user-xp">⚡ {{ user.profile.total_xp }} XP</div>
+                    <a href="{% url 'users:profile' %}" class="user-avatar">
+                        {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="avatar">
+                        {% else %}
+                            <span>{{ user.username|first|upper }}</span>
+                        {% endif %}
+                    </a>
+                    <form method="post" action="{% url 'users:logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="nav-link">Login</a>
+                <a href="{% url 'users:register' %}" class="btn-primary-sm">Get Started</a>
+            {% endif %}
+        </div>
+
+        <button class="nav-toggle" id="navToggle">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Messages -->
+{% if messages %}
+<div class="messages-container">
+    {% for message in messages %}
+    <div class="message message-{{ message.tags }}">
+        {{ message }}
+        <button class="msg-close" onclick="this.parentElement.remove()">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Main Content -->
+<main class="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <span>⚡ LearnPath<strong>AI</strong> — Personalized Learning Roadmaps</span>
+        <span class="footer-right">Built with Django · {{ user.username|default:"" }}</span>
+    </div>
+</footer>
+
+<script src="{% static 'js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

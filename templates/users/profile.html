@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Profile — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>👤 My Profile</h1>
+        <p>Manage your account and view your learning stats</p>
+    </div>
+</div>
+<div class="container profile-grid">
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <div class="profile-avatar-section">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" class="profile-avatar" alt="avatar">
+            {% else %}
+                <div class="profile-avatar-placeholder">{{ user.username|first|upper }}</div>
+            {% endif %}
+            <div class="profile-name">{{ user.get_full_name|default:user.username }}</div>
+            <div class="profile-username">@{{ user.username }}</div>
+            <div class="profile-level-badge">{{ profile.level_title }} · Lv{{ profile.level_number }}</div>
+        </div>
+        <div class="profile-stats-grid">
+            <div class="pstat"><div class="pstat-val">{{ profile.total_xp }}</div><div class="pstat-label">Total XP</div></div>
+            <div class="pstat"><div class="pstat-val">{{ profile.streak_days }}</div><div class="pstat-label">Streak</div></div>
+            <div class="pstat"><div class="pstat-val">{{ roadmaps.count }}</div><div class="pstat-label">Roadmaps</div></div>
+        </div>
+        <div class="profile-joined">Member since {{ user.date_joined|date:"M Y" }}</div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="profile-edit">
+        <h2>Edit Profile</h2>
+        <form method="post" enctype="multipart/form-data" class="edit-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-control">
+            </div>
+            {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="field-error">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-save">Save Changes ✓</button>
+        </form>
+    </div>
+
+    <!-- XP History -->
+    <div class="xp-history">
+        <h2>⚡ Recent XP Activity</h2>
+        {% if xp_history %}
+            {% for log in xp_history %}
+            <div class="xp-log-row">
+                <div class="xp-log-icon">{% if log.reason == 'task_complete' %}✅{% elif log.reason == 'roadmap_complete' %}🏆{% else %}⚡{% endif %}</div>
+                <div class="xp-log-text">{{ log.description }}</div>
+                <div class="xp-log-amt">+{{ log.xp_amount }}</div>
+                <div class="xp-log-time">{{ log.earned_at|timesince }} ago</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="widget-empty">No XP earned yet. Complete tasks to get started!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

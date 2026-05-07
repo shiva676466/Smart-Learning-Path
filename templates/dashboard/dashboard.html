@@ -1,0 +1,142 @@
+{% load dashboard_extras %}
+{% extends 'base.html' %}
+{% block title %}Dashboard — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>👋 Welcome back, {{ user.first_name|default:user.username }}!</h1>
+        <p>You're {{ profile.level_title }} · Level {{ profile.level_number }} · {{ profile.total_xp }} XP</p>
+    </div>
+</div>
+
+<div class="container dashboard-grid">
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="stat-card stat-xp">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-info">
+                <div class="stat-value">{{ profile.total_xp }}</div>
+                <div class="stat-name">Total XP</div>
+            </div>
+        </div>
+        <div class="stat-card stat-streak">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-info">
+                <div class="stat-value">{{ profile.streak_days }}</div>
+                <div class="stat-name">Day Streak</div>
+            </div>
+        </div>
+        <div class="stat-card stat-completed">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <div class="stat-value">{{ completed_tasks }}</div>
+                <div class="stat-name">Tasks Done</div>
+            </div>
+        </div>
+        <div class="stat-card stat-roadmaps">
+            <div class="stat-icon">🗺️</div>
+            <div class="stat-info">
+                <div class="stat-value">{{ completed_roadmaps }}</div>
+                <div class="stat-name">Completed Paths</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Roadmaps -->
+    <div class="dashboard-section">
+        <div class="section-title-row">
+            <h2>Active Roadmaps</h2>
+            <a href="{% url 'roadmap:generate' %}" class="btn-sm-primary">+ New Roadmap</a>
+        </div>
+
+        {% if active_roadmaps %}
+            {% for roadmap in active_roadmaps %}
+            <div class="roadmap-card">
+                <div class="roadmap-header">
+                    <div class="roadmap-skill-icon">{{ roadmap.skill.icon }}</div>
+                    <div class="roadmap-info">
+                        <h3>{{ roadmap.title }}</h3>
+                        <div class="roadmap-meta">
+                            <span class="badge badge-{{ roadmap.level }}">{{ roadmap.get_level_display }}</span>
+                            <span>📅 {{ roadmap.duration_days }} days</span>
+                            <span>⏱ {{ roadmap.daily_hours }}h/day</span>
+                            <span>📆 Started {{ roadmap.start_date }}</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'roadmap:detail' roadmap.pk %}" class="btn-view">View →</a>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" style="width: {{ roadmap.progress_percentage }}%" data-width="{{ roadmap.progress_percentage }}"></div>
+                    </div>
+                    <span class="progress-label">{{ roadmap.progress_percentage }}% complete · {{ roadmap.completed_tasks_count }}/{{ roadmap.total_tasks }} tasks</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">🗺️</div>
+                <h3>No active roadmaps yet</h3>
+                <p>Generate your first personalized learning path to get started!</p>
+                <a href="{% url 'roadmap:generate' %}" class="btn-hero-primary">Generate Roadmap</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="dashboard-sidebar">
+
+        <!-- XP Log -->
+        <div class="widget">
+            <h3>⚡ Recent XP</h3>
+            {% if recent_xp %}
+                {% for log in recent_xp %}
+                <div class="xp-log-item">
+                    <span class="xp-desc">{{ log.description }}</span>
+                    <span class="xp-amount">+{{ log.xp_amount }}</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="widget-empty">Complete tasks to earn XP!</p>
+            {% endif %}
+        </div>
+
+        <!-- Suggestions -->
+        {% if suggestions %}
+        <div class="widget widget-warning">
+            <h3>💡 Suggestions</h3>
+            {% for s in suggestions %}
+            <div class="suggestion-item">{{ s.suggestion_text }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Quick Actions -->
+        <div class="widget">
+            <h3>🚀 Quick Actions</h3>
+            <div class="quick-actions">
+                <a href="{% url 'roadmap:generate' %}" class="quick-action"><i class="fas fa-plus"></i> New Path</a>
+                <a href="{% url 'roadmap:my_roadmaps' %}" class="quick-action"><i class="fas fa-map"></i> All Paths</a>
+                <a href="{% url 'progress:leaderboard' %}" class="quick-action"><i class="fas fa-trophy"></i> Leaderboard</a>
+                <a href="{% url 'users:profile' %}" class="quick-action"><i class="fas fa-user"></i> Profile</a>
+            </div>
+        </div>
+
+        <!-- Level Progress -->
+        <div class="widget">
+            <h3>🎯 Level Progress</h3>
+            <div class="level-info">
+                <div class="level-badge">Lv.{{ profile.level_number }}</div>
+                <div class="level-details">
+                    <div class="level-title">{{ profile.level_title }}</div>
+                    <div class="level-xp">{{ profile.total_xp }} / {{ profile.level_number|add:1|add:0 }}00 XP</div>
+                </div>
+            </div>
+            <div class="progress-bar-track" style="margin-top:8px">
+                <div class="progress-bar-fill" style="width: {% widthratio profile.total_xp|modulo:100 100 100 %}%; background: var(--accent)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

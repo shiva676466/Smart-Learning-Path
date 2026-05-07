@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}My Roadmaps — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>🗺️ My Roadmaps</h1>
+        <p>All your personalized learning paths in one place</p>
+    </div>
+</div>
+<div class="container">
+    <div class="roadmaps-toolbar">
+        <div class="roadmaps-count">{{ roadmaps.count }} total roadmap{{ roadmaps.count|pluralize }}</div>
+        <a href="{% url 'roadmap:generate' %}" class="btn-sm-primary">+ Generate New</a>
+    </div>
+
+    {% if active %}
+    <h2 class="section-subtitle">🟢 Active ({{ active.count }})</h2>
+    <div class="roadmaps-list">
+        {% for roadmap in active %}
+        <div class="roadmap-list-card">
+            <div class="rlc-icon">{{ roadmap.skill.icon }}</div>
+            <div class="rlc-info">
+                <div class="rlc-title">{{ roadmap.title }}</div>
+                <div class="rlc-meta">
+                    <span class="badge badge-{{ roadmap.level }}">{{ roadmap.level }}</span>
+                    <span>{{ roadmap.duration_days }} days</span>
+                    <span>{{ roadmap.daily_hours }}h/day</span>
+                    <span>Started {{ roadmap.start_date }}</span>
+                </div>
+                <div class="rlc-progress">
+                    <div class="progress-bar-track" style="height:6px">
+                        <div class="progress-bar-fill" style="width:{{ roadmap.progress_percentage }}%"></div>
+                    </div>
+                    <span>{{ roadmap.progress_percentage }}%</span>
+                </div>
+            </div>
+            <div class="rlc-actions">
+                <a href="{% url 'roadmap:detail' roadmap.pk %}" class="btn-view">Continue →</a>
+                <form method="post" action="{% url 'roadmap:delete' roadmap.pk %}" onsubmit="return confirm('Delete?')">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-icon-danger">🗑</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if completed %}
+    <h2 class="section-subtitle" style="margin-top:2rem">✅ Completed ({{ completed.count }})</h2>
+    <div class="roadmaps-list">
+        {% for roadmap in completed %}
+        <div class="roadmap-list-card roadmap-list-completed">
+            <div class="rlc-icon">{{ roadmap.skill.icon }}</div>
+            <div class="rlc-info">
+                <div class="rlc-title">{{ roadmap.title }} <span class="badge-done">✅ Done</span></div>
+                <div class="rlc-meta"><span>Completed {{ roadmap.completed_at|date:"M d, Y"|default:"" }}</span></div>
+            </div>
+            <a href="{% url 'roadmap:detail' roadmap.pk %}" class="btn-view">Review →</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not roadmaps %}
+    <div class="empty-state">
+        <div class="empty-icon">🗺️</div>
+        <h3>No roadmaps yet</h3>
+        <p>Generate your first personalized learning path!</p>
+        <a href="{% url 'roadmap:generate' %}" class="btn-hero-primary">Generate Now</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
