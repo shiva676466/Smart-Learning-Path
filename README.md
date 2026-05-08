@@ -6,7 +6,7 @@ A production-quality Django web application that generates personalized, day-by-
 
 ```bash
 # 1. Install dependencies
-pip install django djangorestframework pillow
+pip install -r requirements.txt
 
 # 2. Apply migrations
 python manage.py migrate

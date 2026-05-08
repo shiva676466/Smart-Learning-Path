@@ -2,13 +2,12 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from .models import Skill, Roadmap, RoadmapTask
+from django.db.models import Sum
+from .models import Skill, RoadmapTask
 from .serializers import SkillSerializer, RoadmapSerializer
 from progress.models import XPLog, Progress
-from users.models import UserProfile
 
 
 class SkillListAPI(APIView):
@@ -34,17 +33,39 @@ class CompleteTaskAPI(APIView):
 
     def post(self, request, pk):
         task = get_object_or_404(RoadmapTask, pk=pk, roadmap__user=request.user)
+        profile = request.user.profile
+        roadmap = task.roadmap
 
         if task.is_completed:
             # Undo completion
             task.is_completed = False
             task.completed_at = None
             task.save()
-            # Deduct XP
-            profile = request.user.profile
-            profile.total_xp = max(0, profile.total_xp - task.xp_reward)
-            profile.save()
-            return Response({'status': 'uncompleted', 'xp_change': -task.xp_reward})
+
+            xp_change = -task.xp_reward
+
+            # If roadmap was previously completed, reopen it and remove completion bonus.
+            if roadmap.status == 'completed':
+                roadmap.status = 'active'
+                roadmap.completed_at = None
+                roadmap.save(update_fields=['status', 'completed_at'])
+                xp_change -= 100
+
+            profile.total_xp = max(0, profile.total_xp + xp_change)
+            profile.save(update_fields=['total_xp'])
+
+            progress, _ = Progress.objects.get_or_create(user=request.user, roadmap=roadmap)
+            completed_xp = roadmap.tasks.filter(is_completed=True).aggregate(total=Sum('xp_reward'))['total'] or 0
+            progress.tasks_completed = roadmap.completed_tasks_count
+            progress.total_xp_earned = completed_xp
+            progress.save(update_fields=['tasks_completed', 'total_xp_earned', 'updated_at'])
+
+            return Response({
+                'status': 'uncompleted',
+                'xp_change': xp_change,
+                'total_xp': profile.total_xp,
+                'progress': roadmap.progress_percentage,
+            })
         else:
             # Mark complete
             task.is_completed = True
@@ -52,9 +73,8 @@ class CompleteTaskAPI(APIView):
             task.save()
 
             # Award XP
-            profile = request.user.profile
             profile.total_xp += task.xp_reward
-            profile.save()
+            xp_change = task.xp_reward
 
             # Log XP
             XPLog.objects.create(
@@ -67,30 +87,33 @@ class CompleteTaskAPI(APIView):
 
             # Update progress
             progress, _ = Progress.objects.get_or_create(
-                user=request.user, roadmap=task.roadmap
+                user=request.user, roadmap=roadmap
             )
-            progress.tasks_completed = task.roadmap.completed_tasks_count
-            progress.total_xp_earned += task.xp_reward
-            progress.save()
+            completed_xp = roadmap.tasks.filter(is_completed=True).aggregate(total=Sum('xp_reward'))['total'] or 0
+            progress.tasks_completed = roadmap.completed_tasks_count
+            progress.total_xp_earned = completed_xp
+            progress.save(update_fields=['tasks_completed', 'total_xp_earned', 'updated_at'])
 
             # Check if roadmap is complete
-            if task.roadmap.progress_percentage == 100:
-                task.roadmap.status = 'completed'
-                task.roadmap.completed_at = timezone.now()
-                task.roadmap.save()
+            if roadmap.progress_percentage == 100 and roadmap.status != 'completed':
+                roadmap.status = 'completed'
+                roadmap.completed_at = timezone.now()
+                roadmap.save(update_fields=['status', 'completed_at'])
                 bonus_xp = 100
                 profile.total_xp += bonus_xp
-                profile.save()
+                xp_change += bonus_xp
                 XPLog.objects.create(
                     user=request.user,
                     reason='roadmap_complete',
                     xp_amount=bonus_xp,
-                    description=f'Completed roadmap: {task.roadmap.title}'
+                    description=f'Completed roadmap: {roadmap.title}'
                 )
+
+            profile.save(update_fields=['total_xp'])
 
             return Response({
                 'status': 'completed',
-                'xp_change': task.xp_reward,
+                'xp_change': xp_change,
                 'total_xp': profile.total_xp,
-                'progress': task.roadmap.progress_percentage,
+                'progress': roadmap.progress_percentage,
             })
