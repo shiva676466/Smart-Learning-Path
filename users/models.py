@@ -51,7 +51,7 @@ class UserProfile(models.Model):
 
     @property
     def level_number(self):
-        return self.total_xp // 100 + 1
+        return max(1, self.total_xp // 100 + 1)
 
 
 @receiver(post_save, sender=User)
