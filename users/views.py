@@ -52,7 +52,7 @@ class LogoutView(View):
     def post(self, request):
         logout(request)
         messages.info(request, 'You have been logged out. See you soon! 👋')
-        return redirect('home')
+        return redirect('dashboard:home')
 
 
 @method_decorator(login_required, name='dispatch')
