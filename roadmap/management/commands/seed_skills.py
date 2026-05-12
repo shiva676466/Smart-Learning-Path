@@ -16,7 +16,7 @@ class Command(BaseCommand):
             {'name': 'Blockchain & Web3', 'description': 'Master blockchain technology, smart contracts, Solidity, DeFi protocols, and decentralized applications.', 'category': 'blockchain', 'icon': '⛓️', 'color': '#f97316'},
             {'name': 'Ethical Hacking & Security', 'description': 'Learn penetration testing, vulnerability assessment, network security, and cybersecurity defense strategies.', 'category': 'ethical_hacking', 'icon': '🔐', 'color': '#dc2626'},
         ]
-        created = 0
+        created = 0 
         for data in skills_data:
             skill, flag = Skill.objects.get_or_create(
                 name=data['name'],
