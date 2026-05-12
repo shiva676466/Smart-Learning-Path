@@ -1,0 +1,7 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "buildAptPackages": [
+    "libpango1.0-dev",
+    "pkg-config"
+  ]
+}
