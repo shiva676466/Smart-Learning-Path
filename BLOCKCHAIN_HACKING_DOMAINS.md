@@ -12,11 +12,13 @@ This branch (`feature/add-blockchain-hacking-domains`) introduces two powerful n
 ## 📚 Blockchain & Web3 Domain
 
 ### What You'll Learn
+
 A comprehensive journey from blockchain fundamentals to production dApp development and advanced protocols.
 
 ### Skill Levels
 
 #### 🟢 Beginner Level
+
 - Blockchain Fundamentals
 - Cryptography Essentials
 - Bitcoin & Cryptocurrency Basics
@@ -33,6 +35,7 @@ A comprehensive journey from blockchain fundamentals to production dApp developm
 **Key Skills:** Wallets, transactions, basic contracts, DeFi concepts
 
 #### 🟡 Intermediate Level
+
 - Advanced Solidity Patterns
 - Gas Optimization & Efficient Contracts
 - Contract Testing & Hardhat Framework
@@ -49,6 +52,7 @@ A comprehensive journey from blockchain fundamentals to production dApp developm
 **Key Skills:** Token creation, NFTs, DeFi, testing, security audits
 
 #### 🔴 Advanced Level
+
 - Layer 2 Solutions & Scaling (Arbitrum, Polygon)
 - Smart Contract Architecture & Design Patterns
 - Advanced Security: Formal Verification
@@ -65,6 +69,7 @@ A comprehensive journey from blockchain fundamentals to production dApp developm
 **Key Skills:** Production deployment, custom chains, ZK proofs, research
 
 ### Technologies & Tools
+
 - **Solidity** — Smart contract programming language
 - **Web3.js / Ethers.js** — Blockchain interaction libraries
 - **Hardhat** — Development and testing framework
@@ -77,6 +82,7 @@ A comprehensive journey from blockchain fundamentals to production dApp developm
 - **Cosmos SDK, Substrate, Solana** — Custom blockchain frameworks
 
 ### Real-World Applications
+
 ✅ Build decentralized applications (dApps)  
 ✅ Create tokens and NFTs  
 ✅ Develop DeFi protocols  
@@ -89,11 +95,13 @@ A comprehensive journey from blockchain fundamentals to production dApp developm
 ## 🔐 Ethical Hacking & Security Domain
 
 ### What You'll Learn
+
 A practical journey from cybersecurity basics to advanced penetration testing and incident response.
 
 ### Skill Levels
 
 #### 🟢 Beginner Level
+
 - Cybersecurity Fundamentals (CIA triad, threats)
 - Networking Basics for Security
 - Command Line & Linux Basics
@@ -110,6 +118,7 @@ A practical journey from cybersecurity basics to advanced penetration testing an
 **Key Skills:** Linux, networking, web vulnerabilities, basic tools
 
 #### 🟡 Intermediate Level
+
 - Advanced Network Penetration Testing
 - Exploitation Techniques
 - Web Application Penetration Testing
@@ -126,6 +135,7 @@ A practical journey from cybersecurity basics to advanced penetration testing an
 **Key Skills:** Exploitation, web pentest, malware analysis, Metasploit
 
 #### 🔴 Advanced Level
+
 - Advanced Exploitation & Vulnerability Research
 - Reverse Engineering & Decompilation
 - Advanced Malware Analysis
@@ -142,6 +152,7 @@ A practical journey from cybersecurity basics to advanced penetration testing an
 **Key Skills:** Red team ops, incident response, forensics, CEH preparation
 
 ### Technologies & Tools
+
 - **Kali Linux** — Penetration testing OS
 - **Metasploit Framework** — Exploitation platform
 - **Burp Suite** — Web security testing
@@ -156,34 +167,41 @@ A practical journey from cybersecurity basics to advanced penetration testing an
 - **MITRE ATT&CK** — Threat intelligence
 
 ### Real-World Applications
+
 ✅ Conduct penetration tests  
 ✅ Identify and fix vulnerabilities  
 ✅ Analyze malware behavior  
 ✅ Perform digital forensics  
 ✅ Lead red team engagements  
 ✅ Manage incident response  
-✅ Obtain Certified Ethical Hacker (CEH) certification  
+✅ Obtain Certified Ethical Hacker (CEH) certification
 
 ---
 
 ## 🔧 How to Use
 
 ### 1. View Available Skills
+
 The two new skills are automatically seeded in the database:
+
 ```bash
 python manage.py seed_skills
 ```
 
 ### 2. Generate a Roadmap
+
 Users can now generate personalized learning roadmaps for:
+
 - Blockchain & Web3 (Beginner → Advanced)
 - Ethical Hacking & Security (Beginner → Advanced)
 
 Example roadmap generation options:
+
 - **Blockchain Beginner (30 days, 2 hrs/day)** → 60 hours of structured learning
 - **Hacking Intermediate (60 days, 3 hrs/day)** → 180 hours of hands-on practice
 
 ### 3. Track Progress
+
 - Each domain has 10 topics per level
 - Topics scale with user's available hours
 - XP rewards based on difficulty and workload
@@ -194,12 +212,14 @@ Example roadmap generation options:
 ## 📊 Content Statistics
 
 ### Blockchain & Web3
+
 - **Total Topics:** 30 (10 per level)
 - **Total XP Available:** ~1,365 XP
 - **Total Hours (all levels):** ~270-300 hours
 - **Resource Links:** 30 curated resources
 
 ### Ethical Hacking & Security
+
 - **Total Topics:** 30 (10 per level)
 - **Total XP Available:** ~1,355 XP
 - **Total Hours (all levels):** ~280-320 hours
@@ -210,6 +230,7 @@ Example roadmap generation options:
 ## 🎯 Learning Paths
 
 ### Suggested Combinations
+
 1. **Full Stack Web3 Developer**
    - Web Development (Beginner → Advanced)
    - Blockchain & Web3 (Beginner → Advanced)
@@ -231,6 +252,7 @@ Example roadmap generation options:
 ## 📝 Changes Made
 
 ### Modified Files
+
 1. **roadmap/models.py**
    - Added 'blockchain' and 'ethical_hacking' to CATEGORY_CHOICES
 
@@ -245,6 +267,7 @@ Example roadmap generation options:
    - Colors: Orange (#f97316) and Red (#dc2626)
 
 ### New Migrations
+
 - roadmap/migrations/0002_alter_skill_category.py
 
 ---
@@ -252,6 +275,7 @@ Example roadmap generation options:
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Python 3.8+
 - Django 4.2+
 - Virtual environment activated
@@ -298,12 +322,14 @@ python manage.py runserver
 ## 📚 Curriculum Design Philosophy
 
 ### For Blockchain & Web3
+
 - **Progression:** Foundation → Hands-on → Production-Ready
 - **Focus:** Security and best practices emphasized throughout
 - **Practical:** Heavy emphasis on testnet and sandbox environments
 - **Real-world:** Actual tools and platforms used in industry
 
 ### For Ethical Hacking & Security
+
 - **Progression:** Theory → Practice → Specialization
 - **Focus:** Legal and ethical frameworks from the start
 - **Lab-based:** Dedicated vulnerable environments for practice
@@ -314,6 +340,7 @@ python manage.py runserver
 ## 🔗 Resources
 
 ### Blockchain & Web3 Links
+
 - Ethereum: https://ethereum.org/en/developers/
 - Solidity Docs: https://docs.soliditylang.org/
 - OpenZeppelin: https://docs.openzeppelin.com/
@@ -321,6 +348,7 @@ python manage.py runserver
 - Hardhat: https://hardhat.org/
 
 ### Ethical Hacking & Security Links
+
 - OWASP Top 10: https://owasp.org/www-project-top-ten/
 - MITRE ATT&CK: https://attack.mitre.org/
 - Kali Linux: https://www.kali.org/
@@ -366,4 +394,3 @@ python manage.py runserver
 **Branch:** `feature/add-blockchain-hacking-domains`  
 **Version:** 1.0  
 **Last Updated:** May 2026
-
