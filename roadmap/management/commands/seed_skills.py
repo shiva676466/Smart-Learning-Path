@@ -13,6 +13,8 @@ class Command(BaseCommand):
             {'name': 'Web Development', 'description': 'Build modern full-stack apps with HTML, CSS, JavaScript, React, Node.js, and databases.', 'category': 'web_development', 'icon': '🌐', 'color': '#3b82f6'},
             {'name': 'Artificial Intelligence / Machine Learning', 'description': 'From NumPy/Pandas to deep learning with TensorFlow and Keras.', 'category': 'data_science', 'icon': '🤖', 'color': '#10b981'},
             {'name': 'Competitive Programming', 'description': 'Train for Codeforces, ICPC, LeetCode contests with advanced algorithms.', 'category': 'competitive', 'icon': '🏆', 'color': '#ef4444'},
+            {'name': 'Blockchain & Web3', 'description': 'Master blockchain technology, smart contracts, Solidity, DeFi protocols, and decentralized applications.', 'category': 'blockchain', 'icon': '⛓️', 'color': '#f97316'},
+            {'name': 'Ethical Hacking & Security', 'description': 'Learn penetration testing, vulnerability assessment, network security, and cybersecurity defense strategies.', 'category': 'ethical_hacking', 'icon': '🔐', 'color': '#dc2626'},
         ]
         created = 0
         for data in skills_data:

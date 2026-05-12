@@ -16,6 +16,8 @@ class Skill(models.Model):
         ('data_science', 'Data Science & AI'),
         ('programming', 'Programming Languages'),
         ('competitive', 'Competitive Programming'),
+        ('blockchain', 'Blockchain & Web3'),
+        ('ethical_hacking', 'Ethical Hacking & Security'),
     ]
 
     name = models.CharField(max_length=100, unique=True)
