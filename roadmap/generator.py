@@ -713,6 +713,502 @@ SKILL_TOPICS = {
             },
         ],
     },
+    'blockchain': {
+        'beginner': [
+            {
+                'name': 'Blockchain Fundamentals',
+                'desc': 'What is blockchain, how it works, mining, and core concepts.',
+                'task': 'Watch Bitcoin whitepaper explanation videos. Write notes on blockchain basics.',
+                'url': 'https://www.youtube.com/watch?v=bBC-nCj2qjY',
+                'resource': 'YouTube Blockchain Explained',
+                'difficulty': 1, 'hours': 2.0, 'xp': 25
+            },
+            {
+                'name': 'Cryptography Essentials',
+                'desc': 'Hash functions, digital signatures, public key cryptography.',
+                'task': 'Understand SHA-256, RSA basics. Use online hash tools to explore hashing.',
+                'url': 'https://en.wikipedia.org/wiki/Cryptography',
+                'resource': 'Wikipedia Cryptography',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+            {
+                'name': 'Bitcoin & Cryptocurrency Basics',
+                'desc': 'Bitcoin protocol, wallets, transactions, addresses, and key management.',
+                'task': 'Create a test Bitcoin wallet. Send test transactions on testnet.',
+                'url': 'https://bitcoin.org/en/',
+                'resource': 'Bitcoin.org Official',
+                'difficulty': 2, 'hours': 2.0, 'xp': 30
+            },
+            {
+                'name': 'Introduction to Ethereum',
+                'desc': 'Ethereum network, accounts, gas fees, transactions, and the EVM.',
+                'task': 'Create an Ethereum wallet. Explore block explorers like Etherscan.',
+                'url': 'https://ethereum.org/en/',
+                'resource': 'Ethereum.org Official',
+                'difficulty': 2, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'Smart Contracts Fundamentals',
+                'desc': 'What are smart contracts, Solidity basics, and deployment basics.',
+                'task': 'Write your first simple Solidity contract. Deploy on Remix IDE.',
+                'url': 'https://remix.ethereum.org/',
+                'resource': 'Ethereum Remix IDE',
+                'difficulty': 2, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'Solidity Programming Basics',
+                'desc': 'Variables, data types, functions, modifiers, and control flow in Solidity.',
+                'task': 'Write 5 simple smart contracts covering basic constructs.',
+                'url': 'https://docs.soliditylang.org/',
+                'resource': 'Solidity Documentation',
+                'difficulty': 2, 'hours': 3.0, 'xp': 40
+            },
+            {
+                'name': 'Web3.js & Interacting with Blockchain',
+                'desc': 'Web3.js library, connecting to Ethereum, reading/writing contracts.',
+                'task': 'Use Web3.js to interact with a deployed contract. Build a simple dApp.',
+                'url': 'https://web3js.org/',
+                'resource': 'Web3.js Documentation',
+                'difficulty': 2, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'DeFi Protocols Overview',
+                'desc': 'Decentralized finance basics, liquidity pools, AMMs, lending protocols.',
+                'task': 'Use Uniswap testnet interface. Research Aave and Compound.',
+                'url': 'https://uniswap.org/',
+                'resource': 'Uniswap Protocol',
+                'difficulty': 2, 'hours': 2.0, 'xp': 30
+            },
+            {
+                'name': 'Security Best Practices',
+                'desc': 'Common vulnerabilities, private key management, transaction safety.',
+                'task': 'Study contract security checklist. Understand common exploit patterns.',
+                'url': 'https://consensys.github.io/smart-contract-best-practices/',
+                'resource': 'ConsenSys Security Guide',
+                'difficulty': 3, 'hours': 2.5, 'xp': 40
+            },
+            {
+                'name': 'Blockchain Explorer & Wallet Project',
+                'desc': 'End-to-end project: explore blockchain, send transactions, track balances.',
+                'task': 'Build a mini project using Web3.js to display wallet balance and history.',
+                'url': 'https://etherscan.io/',
+                'resource': 'Etherscan Block Explorer',
+                'difficulty': 2, 'hours': 3.0, 'xp': 50
+            },
+        ],
+        'intermediate': [
+            {
+                'name': 'Advanced Solidity Patterns',
+                'desc': 'Inheritance, interfaces, libraries, and advanced design patterns.',
+                'task': 'Implement contracts using inheritance, interfaces, and libraries.',
+                'url': 'https://docs.soliditylang.org/en/latest/contracts.html',
+                'resource': 'Solidity Contracts Guide',
+                'difficulty': 3, 'hours': 3.0, 'xp': 45
+            },
+            {
+                'name': 'Gas Optimization & Efficient Contracts',
+                'desc': 'Understanding gas costs, writing efficient contracts, optimization tricks.',
+                'task': 'Optimize a contract and reduce gas costs. Measure before and after.',
+                'url': 'https://dev.to/shafu0605/solidity-gas-optimization-tips-1kmo',
+                'resource': 'Gas Optimization Guide',
+                'difficulty': 3, 'hours': 2.5, 'xp': 40
+            },
+            {
+                'name': 'Contract Testing & Hardhat Framework',
+                'desc': 'Testing frameworks, Hardhat setup, unit testing smart contracts.',
+                'task': 'Set up Hardhat. Write comprehensive tests for a contract.',
+                'url': 'https://hardhat.org/',
+                'resource': 'Hardhat Framework',
+                'difficulty': 3, 'hours': 3.0, 'xp': 45
+            },
+            {
+                'name': 'Cryptocurrency Economics & Tokenomics',
+                'desc': 'Token economics, supply/demand, market mechanisms, governance tokens.',
+                'task': 'Analyze tokenomics of 3 major projects. Create a tokenomics spreadsheet.',
+                'url': 'https://blog.curve.fi/understanding-tokenomics/',
+                'resource': 'Curve Finance Tokenomics',
+                'difficulty': 3, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'Building a Token (ERC-20)',
+                'desc': 'Create and deploy an ERC-20 token contract with standard functionality.',
+                'task': 'Deploy an ERC-20 token. Add features like minting and burning.',
+                'url': 'https://docs.openzeppelin.com/contracts/4.x/erc20',
+                'resource': 'OpenZeppelin ERC-20',
+                'difficulty': 3, 'hours': 2.5, 'xp': 40
+            },
+            {
+                'name': 'NFT Development (ERC-721 & ERC-1155)',
+                'desc': 'Non-fungible tokens, NFT contracts, metadata, and IPFS integration.',
+                'task': 'Deploy an ERC-721 contract. Create and mint NFTs with metadata.',
+                'url': 'https://docs.openzeppelin.com/contracts/4.x/erc721',
+                'resource': 'OpenZeppelin ERC-721',
+                'difficulty': 3, 'hours': 3.0, 'xp': 45
+            },
+            {
+                'name': 'Building a DeFi Application',
+                'desc': 'Create a simple lending protocol, liquidity pool, or automated market maker.',
+                'task': 'Build a basic AMM or lending contract. Test with local blockchain.',
+                'url': 'https://uniswap.org/docs/v3/',
+                'resource': 'Uniswap V3 Docs',
+                'difficulty': 4, 'hours': 4.0, 'xp': 60
+            },
+            {
+                'name': 'Security Auditing & Code Review',
+                'desc': 'Identify vulnerabilities, conduct code reviews, use analysis tools.',
+                'task': 'Audit 3 sample contracts. Use Slither and Mythril for analysis.',
+                'url': 'https://slither.readthedocs.io/',
+                'resource': 'Slither Security Tool',
+                'difficulty': 4, 'hours': 3.5, 'xp': 55
+            },
+            {
+                'name': 'Smart Contract Deployment & Mainnet Interaction',
+                'desc': 'Deploy contracts to testnet and mainnet. Use Truffle/Hardhat.',
+                'task': 'Deploy contracts to goerli testnet. Interact via Etherscan.',
+                'url': 'https://goerlifaucet.com/',
+                'resource': 'Goerli Testnet Faucet',
+                'difficulty': 3, 'hours': 2.5, 'xp': 40
+            },
+            {
+                'name': 'Building a Full dApp',
+                'desc': 'Frontend (React), smart contracts, Web3 integration, and deployment.',
+                'task': 'Build a complete dApp with frontend and backend. Deploy to production.',
+                'url': 'https://ethereum.org/en/developers/docs/dapps/',
+                'resource': 'Ethereum dApp Guide',
+                'difficulty': 4, 'hours': 5.0, 'xp': 70
+            },
+        ],
+        'advanced': [
+            {
+                'name': 'Layer 2 Solutions & Scaling',
+                'desc': 'Rollups (Optimistic/ZK), sidechains, plasma, and their trade-offs.',
+                'task': 'Deploy contracts on Arbitrum or Polygon. Compare gas costs and speed.',
+                'url': 'https://ethereum.org/en/layer-2/',
+                'resource': 'Ethereum Layer 2 Guide',
+                'difficulty': 4, 'hours': 3.0, 'xp': 50
+            },
+            {
+                'name': 'Smart Contract Architecture & Design Patterns',
+                'desc': 'Proxy patterns, upgradeability, delegation, and architectural patterns.',
+                'task': 'Implement an upgradeable proxy contract. Study contract architecture.',
+                'url': 'https://docs.openzeppelin.com/contracts/4.x/upgradeable',
+                'resource': 'OpenZeppelin Upgradeable Contracts',
+                'difficulty': 4, 'hours': 3.5, 'xp': 55
+            },
+            {
+                'name': 'Advanced Security: Formal Verification',
+                'desc': 'Formal verification, SMT solvers, and mathematical proofs for contracts.',
+                'task': 'Study formal verification basics. Use Certora or similar tools.',
+                'url': 'https://www.certora.com/',
+                'resource': 'Certora Verification',
+                'difficulty': 5, 'hours': 4.0, 'xp': 70
+            },
+            {
+                'name': 'Cross-Chain Interoperability',
+                'desc': 'Cross-chain bridges, messaging protocols, atomic swaps, and oracles.',
+                'task': 'Build a contract using cross-chain messaging or bridge protocols.',
+                'url': 'https://axelar.network/',
+                'resource': 'Axelar Cross-Chain',
+                'difficulty': 4, 'hours': 3.0, 'xp': 55
+            },
+            {
+                'name': 'Building a Custom Blockchain',
+                'desc': 'Cosmos SDK, Substrate, or Solana development for custom chains.',
+                'task': 'Build a simple chain with Cosmos SDK or explore Solana development.',
+                'url': 'https://docs.cosmos.network/',
+                'resource': 'Cosmos SDK Documentation',
+                'difficulty': 5, 'hours': 5.0, 'xp': 80
+            },
+            {
+                'name': 'Advanced DeFi Strategies & Governance',
+                'desc': 'DAO governance, yield farming, automated strategies, and treasury mgmt.',
+                'task': 'Propose and vote on DAO governance. Analyze yield farming strategies.',
+                'url': 'https://mirror.xyz/',
+                'resource': 'Mirror DAO Platform',
+                'difficulty': 4, 'hours': 3.0, 'xp': 50
+            },
+            {
+                'name': 'Cryptographic Protocols & Zero-Knowledge Proofs',
+                'desc': 'ZK-SNARKs, ZK-STARKs, and their applications in privacy & scaling.',
+                'task': 'Understand ZK proof basics. Experiment with ZK circuits.',
+                'url': 'https://github.com/zcash/halo2',
+                'resource': 'Halo2 ZK Library',
+                'difficulty': 5, 'hours': 4.5, 'xp': 75
+            },
+            {
+                'name': 'Consensus Mechanisms & Network Architecture',
+                'desc': 'PoW, PoS, Byzantine fault tolerance, validator architecture.',
+                'task': 'Study Ethereum 2.0 consensus. Understand validator economics.',
+                'url': 'https://ethereum.org/en/developers/docs/consensus-mechanisms/',
+                'resource': 'Ethereum Consensus Guide',
+                'difficulty': 4, 'hours': 3.5, 'xp': 55
+            },
+            {
+                'name': 'Production Blockchain Development',
+                'desc': 'Deploy to production mainnet, monitoring, maintenance, and incident response.',
+                'task': 'Deploy a production contract. Set up monitoring and security alerts.',
+                'url': 'https://openzeppelin.com/defender/',
+                'resource': 'OpenZeppelin Defender',
+                'difficulty': 4, 'hours': 3.0, 'xp': 60
+            },
+            {
+                'name': 'Blockchain Research & Innovation',
+                'desc': 'Read academic papers, contribute to open-source, and explore cutting edge.',
+                'task': 'Read 3 blockchain research papers. Contribute to a blockchain project.',
+                'url': 'https://arxiv.org/list/cs.CR/recent',
+                'resource': 'ArXiv Cryptography Papers',
+                'difficulty': 5, 'hours': 5.0, 'xp': 90
+            },
+        ],
+    },
+    'ethical_hacking': {
+        'beginner': [
+            {
+                'name': 'Cybersecurity Fundamentals',
+                'desc': 'CIA triad, threat landscape, common vulnerabilities, and defense basics.',
+                'task': 'Read OWASP top 10. Watch cybersecurity awareness videos.',
+                'url': 'https://owasp.org/www-project-top-ten/',
+                'resource': 'OWASP Top 10',
+                'difficulty': 1, 'hours': 2.0, 'xp': 25
+            },
+            {
+                'name': 'Networking Basics for Security',
+                'desc': 'OSI model, TCP/IP, ports, protocols, and common network tools.',
+                'task': 'Learn the OSI model. Use ping, traceroute, netstat, and nmap basics.',
+                'url': 'https://www.youtube.com/watch?v=e5DEVMtrZIo',
+                'resource': 'OSI Model Explained',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+            {
+                'name': 'Command Line & Linux Basics',
+                'desc': 'Linux commands, file system, permissions, users, and shell scripting intro.',
+                'task': 'Practice Linux commands. Write 3 simple shell scripts.',
+                'url': 'https://www.linux.com/training-tutorials/linux-command-line-tips/',
+                'resource': 'Linux Command Line',
+                'difficulty': 2, 'hours': 3.0, 'xp': 35
+            },
+            {
+                'name': 'Cryptography & Hashing Basics',
+                'desc': 'Encryption, decryption, hashing, symmetric & asymmetric crypto.',
+                'task': 'Learn AES, RSA, MD5, SHA. Use OpenSSL for encryption tasks.',
+                'url': 'https://www.youtube.com/watch?v=NuyzuNBFWxQ',
+                'resource': 'Cryptography Basics',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+            {
+                'name': 'Penetration Testing Fundamentals',
+                'desc': 'Methodology, reconnaissance, scanning, enumeration, and exploitation intro.',
+                'task': 'Learn the penetration testing framework. Practice with DVWA.',
+                'url': 'http://www.dvwa.co.uk/',
+                'resource': 'DVWA Vulnerable App',
+                'difficulty': 2, 'hours': 3.0, 'xp': 35
+            },
+            {
+                'name': 'Scanning & Enumeration Tools',
+                'desc': 'Nmap, Masscan, Shodan, and other reconnaissance and scanning tools.',
+                'task': 'Use nmap on lab networks. Practice network scanning scenarios.',
+                'url': 'https://nmap.org/',
+                'resource': 'Nmap Documentation',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+            {
+                'name': 'Web Application Security Basics',
+                'desc': 'HTTP/HTTPS, web vulnerabilities, OWASP top 10 web issues.',
+                'task': 'Learn SQL injection, XSS, CSRF. Practice with OWASP WebGoat.',
+                'url': 'https://owasp.org/www-project-webgoat/',
+                'resource': 'OWASP WebGoat',
+                'difficulty': 2, 'hours': 3.0, 'xp': 35
+            },
+            {
+                'name': 'Vulnerability Assessment Introduction',
+                'desc': 'Identifying vulnerabilities, severity ratings, and remediation basics.',
+                'task': 'Perform vulnerability assessment on DVWA. Create remediation report.',
+                'url': 'http://www.dvwa.co.uk/',
+                'resource': 'DVWA Assessment Practice',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+            {
+                'name': 'Social Engineering & Physical Security',
+                'desc': 'Common social engineering tactics, phishing, pretexting, and defense.',
+                'task': 'Study social engineering attacks. Practice identifying phishing emails.',
+                'url': 'https://www.youtube.com/watch?v=4OknzjV0Uac',
+                'resource': 'Social Engineering Demo',
+                'difficulty': 1, 'hours': 2.0, 'xp': 25
+            },
+            {
+                'name': 'Security Tools & Lab Setup',
+                'desc': 'Setting up ethical hacking labs, using Kali Linux, VM environments.',
+                'task': 'Set up Kali Linux. Configure virtual lab with target machines.',
+                'url': 'https://www.kali.org/',
+                'resource': 'Kali Linux Official',
+                'difficulty': 2, 'hours': 2.5, 'xp': 30
+            },
+        ],
+        'intermediate': [
+            {
+                'name': 'Advanced Network Penetration Testing',
+                'desc': 'Man-in-the-middle attacks, sniffing, packet analysis, network exploitation.',
+                'task': 'Set up network lab. Practice MITM attacks with Wireshark analysis.',
+                'url': 'https://www.wireshark.org/',
+                'resource': 'Wireshark Network Analyzer',
+                'difficulty': 3, 'hours': 3.5, 'xp': 45
+            },
+            {
+                'name': 'Exploitation Techniques',
+                'desc': 'Buffer overflow, shellcode, payload generation, and exploit creation.',
+                'task': 'Learn shellcode basics. Create exploits for vulnerable programs.',
+                'url': 'https://www.exploit-db.com/',
+                'resource': 'Exploit Database',
+                'difficulty': 4, 'hours': 4.0, 'xp': 55
+            },
+            {
+                'name': 'Web Application Penetration Testing',
+                'desc': 'Advanced web vulnerabilities, API security, authentication bypass, etc.',
+                'task': 'Perform full web pentest on a vulnerable application. Create detailed report.',
+                'url': 'https://portswigger.net/burp',
+                'resource': 'Burp Suite Web Security',
+                'difficulty': 3, 'hours': 4.0, 'xp': 50
+            },
+            {
+                'name': 'SQL Injection & Database Attacks',
+                'desc': 'SQL injection techniques, union-based, blind, time-based, and bypasses.',
+                'task': 'Exploit database using SQL injection. Perform blind and time-based attacks.',
+                'url': 'https://sqlmap.org/',
+                'resource': 'SQLMap Automated Tool',
+                'difficulty': 3, 'hours': 3.0, 'xp': 40
+            },
+            {
+                'name': 'Wireless Security & WiFi Cracking',
+                'desc': 'WiFi protocols, WEP, WPA/WPA2, aircrack, and wireless exploitation.',
+                'task': 'Capture WPA handshake. Crack passwords using aircrack and hashcat.',
+                'url': 'https://www.aircrack-ng.org/',
+                'resource': 'Aircrack-ng Wireless',
+                'difficulty': 3, 'hours': 3.5, 'xp': 45
+            },
+            {
+                'name': 'Malware Analysis Basics',
+                'desc': 'Static & dynamic analysis, reverse engineering, sandbox environments.',
+                'task': 'Analyze malware samples in sandbox. Use IDA Free or Ghidra.',
+                'url': 'https://www.ghidra-sre.org/',
+                'resource': 'Ghidra Reverse Engineering',
+                'difficulty': 4, 'hours': 4.0, 'xp': 55
+            },
+            {
+                'name': 'Password Cracking & Hashing',
+                'desc': 'Hash cracking, password wordlists, rainbow tables, GPU acceleration.',
+                'task': 'Crack hashes using hashcat. Compare cracking performance.',
+                'url': 'https://hashcat.net/',
+                'resource': 'Hashcat Password Cracking',
+                'difficulty': 3, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'Metasploit Framework Mastery',
+                'desc': 'Metasploit modules, payload generation, multi-stage exploitation.',
+                'task': 'Build exploits using Metasploit. Create custom modules.',
+                'url': 'https://www.metasploit.com/',
+                'resource': 'Metasploit Framework',
+                'difficulty': 4, 'hours': 3.5, 'xp': 50
+            },
+            {
+                'name': 'Post-Exploitation & Persistence',
+                'desc': 'Maintaining access, privilege escalation, lateral movement, and evasion.',
+                'task': 'Practice privilege escalation. Set up persistence mechanisms.',
+                'url': 'https://gtfobins.github.io/',
+                'resource': 'GTFOBins Privilege Escalation',
+                'difficulty': 4, 'hours': 3.5, 'xp': 50
+            },
+            {
+                'name': 'Comprehensive Lab Practice',
+                'desc': 'End-to-end penetration test in lab environment with full reporting.',
+                'task': 'Perform complete pentest. Write professional security report.',
+                'url': 'https://www.hackthebox.com/',
+                'resource': 'HackTheBox Platform',
+                'difficulty': 3, 'hours': 5.0, 'xp': 70
+            },
+        ],
+        'advanced': [
+            {
+                'name': 'Advanced Exploitation & Vulnerability Research',
+                'desc': 'Zero-day research, vulnerability disclosure, exploit development.',
+                'task': 'Research and develop exploit for known vulnerability. Document findings.',
+                'url': 'https://www.cvedetails.com/',
+                'resource': 'CVE Details Database',
+                'difficulty': 5, 'hours': 5.0, 'xp': 80
+            },
+            {
+                'name': 'Reverse Engineering & Decompilation',
+                'desc': 'Binary analysis, decompilation, IDA Pro, Ghidra advanced usage.',
+                'task': 'Reverse engineer binary. Identify and modify functionality.',
+                'url': 'https://www.ida.fyi/',
+                'resource': 'IDA Pro Advanced',
+                'difficulty': 5, 'hours': 4.5, 'xp': 75
+            },
+            {
+                'name': 'Advanced Malware Analysis',
+                'desc': 'Malware behavior analysis, polymorphism, packing, and obfuscation.',
+                'task': 'Analyze packed and obfuscated malware. Identify C&C communication.',
+                'url': 'https://any.run/',
+                'resource': 'ANY.RUN Malware Sandbox',
+                'difficulty': 5, 'hours': 4.5, 'xp': 75
+            },
+            {
+                'name': 'Advanced Application Security',
+                'desc': 'API security, microservices, containerization, and cloud security issues.',
+                'task': 'Perform security audit of microservices architecture.',
+                'url': 'https://owasp.org/www-project-api-security/',
+                'resource': 'OWASP API Security Top 10',
+                'difficulty': 4, 'hours': 4.0, 'xp': 60
+            },
+            {
+                'name': 'Red Teaming & Advanced Simulation',
+                'desc': 'Full adversary simulation, evasion techniques, and detection bypass.',
+                'task': 'Conduct full red team engagement. Present findings to blue team.',
+                'url': 'https://www.maltego.com/',
+                'resource': 'Maltego Intelligence Platform',
+                'difficulty': 5, 'hours': 5.0, 'xp': 85
+            },
+            {
+                'name': 'Incident Response & Forensics',
+                'desc': 'Investigating security incidents, gathering evidence, timeline reconstruction.',
+                'task': 'Perform forensic investigation of sample systems. Create chain of custody.',
+                'url': 'https://www.sleuthkit.org/',
+                'resource': 'Sleuth Kit Forensics',
+                'difficulty': 4, 'hours': 4.0, 'xp': 65
+            },
+            {
+                'name': 'Threat Intelligence & Cyber Threat Landscape',
+                'desc': 'MITRE ATT&CK, threat actors, threat modeling, and defense strategy.',
+                'task': 'Map threat actor tactics using MITRE ATT&CK. Create threat model.',
+                'url': 'https://attack.mitre.org/',
+                'resource': 'MITRE ATT&CK Framework',
+                'difficulty': 4, 'hours': 3.5, 'xp': 55
+            },
+            {
+                'name': 'Cloud Security & Infrastructure Penetration Testing',
+                'desc': 'AWS, Azure, GCP security, misconfigurations, and cloud exploitation.',
+                'task': 'Audit cloud infrastructure. Identify misconfigurations and risks.',
+                'url': 'https://about.gitlab.com/blog/2021/01/06/kubernetes-security/',
+                'resource': 'Kubernetes Security Best Practices',
+                'difficulty': 4, 'hours': 4.5, 'xp': 65
+            },
+            {
+                'name': 'Vulnerability Disclosure Program Management',
+                'desc': 'Running bug bounty programs, vulnerability coordination, and reporting.',
+                'task': 'Submit vulnerability reports to bug bounty platform. Track outcomes.',
+                'url': 'https://www.bugcrowd.com/',
+                'resource': 'Bugcrowd Platform',
+                'difficulty': 3, 'hours': 2.5, 'xp': 35
+            },
+            {
+                'name': 'Certified Ethical Hacker Preparation',
+                'desc': 'CEH exam preparation, comprehensive review, and practice tests.',
+                'task': 'Complete CEH practice exams. Review all CEH domains thoroughly.',
+                'url': 'https://www.eccouncil.org/programs/certified-ethical-hacker/',
+                'resource': 'EC-Council CEH',
+                'difficulty': 4, 'hours': 6.0, 'xp': 100
+            },
+        ],
+    },
 }
 
 # Fallback topics for any skill/level combination not explicitly defined
@@ -733,6 +1229,10 @@ def get_skill_key(skill_name: str) -> str:
         'Web Development': 'webdev',
         'Artificial Intelligence / Machine Learning': 'aiml',
         'Competitive Programming': 'competitive',
+        'Blockchain & Web3': 'blockchain',
+        'Blockchain': 'blockchain',
+        'Ethical Hacking & Security': 'ethical_hacking',
+        'Ethical Hacking': 'ethical_hacking',
     }
     for key, val in mapping.items():
         if key.lower() in skill_name.lower() or val in skill_name.lower():
