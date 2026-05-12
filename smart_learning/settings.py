@@ -108,3 +108,7 @@ REST_FRAMEWORK = {
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://smart-learning-path-production.up.railway.app",
+]
