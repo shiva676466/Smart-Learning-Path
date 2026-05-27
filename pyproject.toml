@@ -1,0 +1,2 @@
+[tool.vercel]
+entrypoint = "smart_learning.wsgi:application"
