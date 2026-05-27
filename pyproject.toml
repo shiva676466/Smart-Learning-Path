@@ -1,2 +1,2 @@
 [tool.vercel]
-entrypoint = "smart_learning.wsgi:application"
+entrypoint = "smart_learning.asgi:application"
