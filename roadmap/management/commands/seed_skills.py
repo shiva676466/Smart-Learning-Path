@@ -15,6 +15,12 @@ class Command(BaseCommand):
             {'name': 'Competitive Programming', 'description': 'Train for Codeforces, ICPC, LeetCode contests with advanced algorithms.', 'category': 'competitive', 'icon': '🏆', 'color': '#ef4444'},
             {'name': 'Blockchain & Web3', 'description': 'Master blockchain technology, smart contracts, Solidity, DeFi protocols, and decentralized applications.', 'category': 'blockchain', 'icon': '⛓️', 'color': '#f97316'},
             {'name': 'Ethical Hacking & Security', 'description': 'Learn penetration testing, vulnerability assessment, network security, and cybersecurity defense strategies.', 'category': 'ethical_hacking', 'icon': '🔐', 'color': '#dc2626'},
+            {'name': 'DevOps & Cloud', 'description': 'Linux, Docker, Kubernetes, Terraform, CI/CD pipelines and AWS/GCP fundamentals to ship and operate production systems.', 'category': 'devops', 'icon': '☁️', 'color': '#06b6d4'},
+            {'name': 'System Design', 'description': 'Scalable architecture: load balancing, caching, sharding, queues, microservices, and real-world distributed system design.', 'category': 'system_design', 'icon': '🏗️', 'color': '#14b8a6'},
+            {'name': 'Mobile Development', 'description': 'Build cross-platform mobile apps with React Native and Flutter — navigation, state, native modules, and store releases.', 'category': 'mobile', 'icon': '📱', 'color': '#ec4899'},
+            {'name': 'Game Development', 'description': 'Engine fundamentals with Unity and Godot — physics, shaders, gameplay programming, and shipping complete games.', 'category': 'gamedev', 'icon': '🎮', 'color': '#a855f7'},
+            {'name': 'Data Engineering', 'description': 'SQL, Spark, Airflow, data warehouses, streaming pipelines and the modern data stack used by production teams.', 'category': 'data_engineering', 'icon': '🛢️', 'color': '#0ea5e9'},
+            {'name': 'Java & Spring Boot', 'description': 'Modern Java (17+) with Spring Boot — REST APIs, JPA, security, testing and production-grade backend services.', 'category': 'java_backend', 'icon': '☕', 'color': '#b91c1c'},
         ]
         created = 0 
         for data in skills_data:

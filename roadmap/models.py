@@ -18,6 +18,12 @@ class Skill(models.Model):
         ('competitive', 'Competitive Programming'),
         ('blockchain', 'Blockchain & Web3'),
         ('ethical_hacking', 'Ethical Hacking & Security'),
+        ('devops', 'DevOps & Cloud'),
+        ('system_design', 'System Design'),
+        ('mobile', 'Mobile Development'),
+        ('gamedev', 'Game Development'),
+        ('data_engineering', 'Data Engineering'),
+        ('java_backend', 'Java & Spring Boot'),
     ]
 
     name = models.CharField(max_length=100, unique=True)
