@@ -23,11 +23,20 @@ def _set_query(url: str, **params: str) -> str:
 
 
 def _amazon(url: str, ids: dict) -> str:
+    """Tag amazon.com / amazon.in / amzn.to product URLs only.
+
+    AWS docs (aws.amazon.com), developer (developer.amazon.com), and
+    other non-shop subdomains don't earn affiliate commissions, so we
+    skip them to keep clean URLs.
+    """
     tag = ids.get('amazon')
     if not tag:
         return url
     host = urlparse(url).netloc.lower()
-    if 'amazon.' in host or 'amzn.' in host:
+    if 'amzn.to' in host:
+        return _set_query(url, tag=tag)
+    # Shopping subdomains: bare "amazon.tld" or "www.amazon.tld" only.
+    if host.startswith('amazon.') or host.startswith('www.amazon.'):
         return _set_query(url, tag=tag)
     return url
 

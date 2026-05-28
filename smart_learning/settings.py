@@ -8,6 +8,14 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load .env into os.environ (for local dev). In prod, env vars come from
+# the host (Vercel/Railway) and this is a no-op if .env is absent.
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+except ImportError:
+    pass
+
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
     'django-insecure-smart-learning-2025-change-in-production-xyz123abc',
