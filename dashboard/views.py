@@ -1,11 +1,16 @@
 """Dashboard views"""
 
+import json
+
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from roadmap.models import Roadmap, RoadmapTask
 from progress.models import XPLog, AdaptiveSuggestion
+
+from .retention import compute_retention
 
 
 class HomeView(View):
@@ -50,5 +55,18 @@ class DashboardView(View):
             'completed_tasks': completed_tasks,
             'profile': user.profile,
             'next_task': next_task,
+        }
+        return render(request, self.template_name, ctx)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class RetentionStatsView(View):
+    template_name = 'dashboard/retention.html'
+
+    def get(self, request):
+        stats = compute_retention()
+        ctx = {
+            'stats': stats,
+            'daily_series_json': json.dumps(stats['daily_series']),
         }
         return render(request, self.template_name, ctx)

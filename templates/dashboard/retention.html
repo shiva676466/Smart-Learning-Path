@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}Retention Stats — LearnPathAI{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <h1>📈 Retention &amp; Engagement</h1>
+    <p>Staff-only. Activity signal = XPLog entries (task completions).</p>
+  </div>
+</div>
+
+<div class="container" style="padding: 28px 24px 60px;">
+  <div class="stats-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.dau }}</div>
+        <div class="stat-name">DAU · last 24h</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📆</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.wau }}</div>
+        <div class="stat-name">WAU · last 7d</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🗓️</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.mau }}</div>
+        <div class="stat-name">MAU · last 30d</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.total_users }}</div>
+        <div class="stat-name">Total users</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🆕</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.signups_last_7 }}</div>
+        <div class="stat-name">Signups · last 7d</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-info">
+        <div class="stat-value">{{ stats.signups_last_30 }}</div>
+        <div class="stat-name">Signups · last 30d</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-section" style="margin-bottom: 32px;">
+    <h2 style="margin-bottom: 12px;">Daily active users · last 30 days</h2>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px;">
+      <canvas id="dauChart" height="80"></canvas>
+    </div>
+  </div>
+
+  <div class="dashboard-section">
+    <h2 style="margin-bottom: 12px;">Rolling cohort retention</h2>
+    <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.9rem;">
+      Of users who signed up in the last 30 days (excluding the most recent N days),
+      what % returned at least once on or after day N?
+    </p>
+    <div class="stats-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <div class="stat-card">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.retention.d1.pct }}%</div>
+          <div class="stat-name">D1 retention · {{ stats.retention.d1.retained }}/{{ stats.retention.d1.cohort_size }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🟡</div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.retention.d7.pct }}%</div>
+          <div class="stat-name">D7 retention · {{ stats.retention.d7.retained }}/{{ stats.retention.d7.cohort_size }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔴</div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.retention.d30.pct }}%</div>
+          <div class="stat-name">D30 retention · {{ stats.retention.d30.retained }}/{{ stats.retention.d30.cohort_size }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="color: var(--text-faint); font-size: 0.8rem; margin-top: 24px;">
+    Generated {{ stats.generated_at|timesince }} ago. Reload to refresh.
+  </p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script id="dauData" type="application/json">{{ daily_series_json|safe }}</script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById('dauData').textContent);
+  const ctx = document.getElementById('dauChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.map(d => d.date.slice(5)),
+      datasets: [{
+        label: 'DAU',
+        data: data.map(d => d.count),
+        borderColor: '#6366f1',
+        backgroundColor: 'rgba(99,102,241,0.15)',
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true,
+        pointRadius: 3,
+        pointBackgroundColor: '#8b5cf6',
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+        y: { beginAtZero: true, ticks: { color: '#94a3b8', precision: 0 }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      },
+      plugins: { legend: { labels: { color: '#e2e8f0' } } },
+    }
+  });
+})();
+</script>
+{% endblock %}

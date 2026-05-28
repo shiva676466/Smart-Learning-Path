@@ -115,3 +115,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CSRF_TRUSTED_ORIGINS = [
     "https://smart-learning-path-production.up.railway.app",
 ]
+
+# Affiliate IDs — set via env vars in production. Empty string disables
+# the rewrite for that program (URL passes through unchanged).
+AFFILIATE_IDS = {
+    'amazon': os.environ.get('AFFILIATE_AMAZON_TAG', ''),
+    'udemy': os.environ.get('AFFILIATE_UDEMY_ID', ''),
+    'coursera': os.environ.get('AFFILIATE_COURSERA_ID', ''),
+    'skillshare': os.environ.get('AFFILIATE_SKILLSHARE_ID', ''),
+    'educative': os.environ.get('AFFILIATE_EDUCATIVE_ID', ''),
+    'impact_id': os.environ.get('AFFILIATE_IMPACT_ID', ''),
+}

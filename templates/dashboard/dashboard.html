@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load dashboard_extras %} {% block title %}Dashboard
+{% extends 'base.html' %} {% load dashboard_extras %} {% load affiliate_tags %} {% block title %}Dashboard
 — LearnPathAI{% endblock %} {% block content %}
 <div class="page-header">
   <div class="container">
@@ -37,7 +37,7 @@
         Open Roadmap →
       </a>
       {% if next_task.resource_url %}
-      <a href="{{ next_task.resource_url }}" target="_blank" rel="noopener" class="today-task-resource">
+      <a href="{{ next_task.resource_url|affiliate }}" target="_blank" rel="noopener sponsored" class="today-task-resource">
         🔗 {{ next_task.resource_title|default:"Resource" }}
       </a>
       {% endif %}

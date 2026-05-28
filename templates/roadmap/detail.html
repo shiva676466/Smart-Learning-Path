@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load affiliate_tags %}
 {% block title %}{{ roadmap.title }} — LearnPathAI{% endblock %}
 {% block content %}
 <div class="page-header">
@@ -82,7 +83,7 @@
 
                 <div class="task-footer">
                     {% if task.resource_url %}
-                    <a href="{{ task.resource_url }}" target="_blank" class="resource-link">
+                    <a href="{{ task.resource_url|affiliate }}" target="_blank" rel="noopener sponsored" class="resource-link">
                         🔗 {{ task.resource_title|default:"Learn More" }}
                     </a>
                     {% endif %}
