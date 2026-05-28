@@ -8,6 +8,7 @@ from django.db.models import Sum
 from .models import Skill, Roadmap, RoadmapTask
 from .serializers import SkillSerializer, RoadmapSerializer
 from progress.models import XPLog, Progress
+from progress.streaks import record_activity
 
 
 class SkillListAPI(APIView):
@@ -111,9 +112,12 @@ class CompleteTaskAPI(APIView):
 
             profile.save(update_fields=['total_xp'])
 
+            record_activity(profile, progress)
+
             return Response({
                 'status': 'completed',
                 'xp_change': xp_change,
                 'total_xp': profile.total_xp,
                 'progress': roadmap.progress_percentage,
+                'streak': profile.streak_days,
             })

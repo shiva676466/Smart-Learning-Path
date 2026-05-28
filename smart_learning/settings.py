@@ -8,9 +8,12 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-smart-learning-2025-change-in-production-xyz123abc'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-smart-learning-2025-change-in-production-xyz123abc',
+)
 
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 # Disable HTTPS redirect/security settings for local development
 SECURE_SSL_REDIRECT = False
@@ -18,7 +21,7 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_PROXY_SSL_HEADER = None
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',') if h.strip()]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

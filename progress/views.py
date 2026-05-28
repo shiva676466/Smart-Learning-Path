@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Sum
 from .models import XPLog, Progress
+from .streaks import record_activity
 from roadmap.models import RoadmapTask
 from users.models import UserProfile
 
@@ -73,10 +74,14 @@ class ToggleTaskView(View):
         progress.total_xp_earned = completed_xp
         progress.save(update_fields=['tasks_completed', 'total_xp_earned', 'updated_at'])
 
+        if task.is_completed:
+            record_activity(profile, progress)
+
         return JsonResponse({
             'completed': task.is_completed,
             'progress': roadmap.progress_percentage,
             'xp': profile.total_xp,
+            'streak': profile.streak_days,
         })
 
 
