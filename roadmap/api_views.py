@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Sum
-from .models import Skill, RoadmapTask
+from .models import Skill, Roadmap, RoadmapTask
 from .serializers import SkillSerializer, RoadmapSerializer
 from progress.models import XPLog, Progress
 

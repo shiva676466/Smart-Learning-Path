@@ -60,9 +60,15 @@
 <section class="section cta-section">
     <div class="container">
         <div class="cta-box">
-            <h2>Ready to Transform Your Skills?</h2>
-            <p>Join learners already building expertise with structured roadmaps.</p>
-            <a href="{% url 'users:register' %}" class="btn-hero-primary"><i class="fas fa-rocket"></i> Create Free Account</a>
+            {% if user.is_authenticated %}
+                <h2>Ready to Level Up?</h2>
+                <p>Pick up where you left off or start a brand-new roadmap.</p>
+                <a href="{% url 'roadmap:generate' %}" class="btn-hero-primary"><i class="fas fa-route"></i> Generate a New Roadmap</a>
+            {% else %}
+                <h2>Ready to Transform Your Skills?</h2>
+                <p>Join learners already building expertise with structured roadmaps.</p>
+                <a href="{% url 'users:register' %}" class="btn-hero-primary"><i class="fas fa-rocket"></i> Create Free Account</a>
+            {% endif %}
         </div>
     </div>
 </section>
