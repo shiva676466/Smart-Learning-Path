@@ -11,6 +11,40 @@
 </div>
 
 <div class="container dashboard-grid">
+  {% if next_task %}
+  <div class="today-task-card" id="todayTaskCard">
+    {% csrf_token %}
+    <div class="today-task-header">
+      <div class="today-task-label">
+        <span class="today-task-pill">Today's Task</span>
+        <span class="today-task-meta">
+          {{ next_task.roadmap.skill.icon }} {{ next_task.roadmap.skill.name }}
+          · Day {{ next_task.day_number }} / {{ next_task.roadmap.duration_days }}
+        </span>
+      </div>
+      <div class="today-task-xp">+{{ next_task.xp_reward }} XP</div>
+    </div>
+    <h2 class="today-task-title">{{ next_task.title }}</h2>
+    <p class="today-task-desc">{{ next_task.description }}</p>
+    <div class="today-task-actions">
+      <button
+        class="btn-hero-primary"
+        id="todayTaskCompleteBtn"
+        data-task-id="{{ next_task.id }}">
+        <i class="fas fa-check"></i> Mark Complete
+      </button>
+      <a href="{% url 'roadmap:detail' next_task.roadmap.pk %}" class="btn-hero-secondary">
+        Open Roadmap →
+      </a>
+      {% if next_task.resource_url %}
+      <a href="{{ next_task.resource_url }}" target="_blank" rel="noopener" class="today-task-resource">
+        🔗 {{ next_task.resource_title|default:"Resource" }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
   <!-- Stats Row -->
   <div class="stats-row">
     <div class="stat-card stat-xp">
@@ -162,4 +196,38 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  const btn = document.getElementById('todayTaskCompleteBtn');
+  if (!btn) return;
+  const csrf = document.querySelector('[name=csrfmiddlewaretoken]')?.value
+            || document.cookie.split('; ').find(c => c.startsWith('csrftoken='))?.split('=')[1];
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.taskId;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Saving…';
+    fetch(`/api/tasks/${id}/complete/`, {
+      method: 'POST',
+      headers: { 'X-CSRFToken': csrf, 'Content-Type': 'application/json' },
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === 'completed') {
+          document.getElementById('todayTaskCard').style.display = 'none';
+          location.reload();
+        } else {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+        }
+      })
+      .catch(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+      });
+  });
+})();
+</script>
 {% endblock %}

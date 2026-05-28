@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from roadmap.models import Roadmap
+from roadmap.models import Roadmap, RoadmapTask
 from progress.models import XPLog, AdaptiveSuggestion
 
 
@@ -31,6 +31,16 @@ class DashboardView(View):
         total_tasks = sum(r.total_tasks for r in active_roadmaps)
         completed_tasks = sum(r.completed_tasks_count for r in active_roadmaps)
 
+        # Today's Task: lowest day_number incomplete task from the most
+        # recently created active roadmap.
+        next_task = (
+            RoadmapTask.objects
+            .filter(roadmap__user=user, roadmap__status='active', is_completed=False)
+            .order_by('-roadmap__created_at', 'day_number')
+            .select_related('roadmap', 'roadmap__skill')
+            .first()
+        )
+
         ctx = {
             'active_roadmaps': active_roadmaps,
             'completed_roadmaps': completed_roadmaps,
@@ -39,5 +49,6 @@ class DashboardView(View):
             'total_tasks': total_tasks,
             'completed_tasks': completed_tasks,
             'profile': user.profile,
+            'next_task': next_task,
         }
         return render(request, self.template_name, ctx)
